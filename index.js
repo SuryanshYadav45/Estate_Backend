@@ -15,7 +15,7 @@ app.use(cors());
 //checking the server
 app.use(express.json());
 
-
+//mongo connection
 
 mongoose.connect(process.env.MONGO_STRING).then(() => {
     console.log("database connected successfully")
