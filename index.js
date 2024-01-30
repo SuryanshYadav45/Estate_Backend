@@ -11,6 +11,8 @@ const app = express();
 
 
 app.use(cors());
+
+//checking the server
 app.use(express.json());
 
 
