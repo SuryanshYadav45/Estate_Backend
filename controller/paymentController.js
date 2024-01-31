@@ -1,4 +1,5 @@
-const stripe = require('stripe')('sk_test_51NUuHBSBEZsH2Wk9xkwl42RTPtItmRntnla3RQJQNGFqomvX5jgWAGT66GCywBCk9pvp088zY9Zx75zoftKDIgKB00fdC6NI9J');
+require("dotenv").config({path:"../.env"})
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const PurchaseModel=require('../models/PurchaseModel.js')
 
 
