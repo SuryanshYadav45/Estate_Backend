@@ -42,9 +42,9 @@ const payment= async (req, res) => {
       })
       if(!history)
       {
-        res.redirect("http://localhost:5173/cancel");
+        res.redirect("https://65b938fcdb5b472037ff67c6--lucky-manatee-19cd99.netlify.app/cancel");
       }
-      res.redirect("http://localhost:5173/success");
+      res.redirect("https://65b938fcdb5b472037ff67c6--lucky-manatee-19cd99.netlify.app/success");
       
 
       
