@@ -23,7 +23,7 @@ const payment= async (req, res) => {
       line_items:lineItems,
       mode:'payment',
       success_url: `https://backendestate.onrender.com/payment/success?session_id={CHECKOUT_SESSION_ID}&propertyId=${propertyId}&userId=${userId}`,
-      cancel_url: `https://65b938fcdb5b472037ff67c6--lucky-manatee-19cd99.netlify.app/cancel`,
+      cancel_url: `https://realtorsy.netlify.app/cancel`,
     });
     res.status(200).json(session.url);
   };
@@ -42,9 +42,9 @@ const payment= async (req, res) => {
       })
       if(!history)
       {
-        res.redirect("https://65b938fcdb5b472037ff67c6--lucky-manatee-19cd99.netlify.app/cancel");
+        res.redirect("https://realtorsy.netlify.app/cancel");
       }
-      res.redirect("https://65b938fcdb5b472037ff67c6--lucky-manatee-19cd99.netlify.app/success");
+      res.redirect("https://realtorsy.netlify.app//success");
       
 
       
