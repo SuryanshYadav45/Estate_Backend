@@ -44,7 +44,7 @@ const payment= async (req, res) => {
       {
         res.redirect("https://realtorsy.netlify.app/cancel");
       }
-      res.redirect("https://realtorsy.netlify.app//success");
+      res.redirect("https://realtorsy.netlify.app/success");
       
 
       
