@@ -14,8 +14,12 @@ const signup = async (req, res) => {
   try {
     const{username,email,password}=req.body;
     console.log(req.body);
+    const user= await UserModel.find({email});
+    if(user)
+    {
+      return res.status(409).json({message:"user already exists"});
+    }
     const hashpassword = await bcrypt.hash(password,12);
-    console.log(hashpassword);
     const response = await UserModel.create({
       username,
       email,
