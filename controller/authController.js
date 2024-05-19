@@ -15,7 +15,7 @@ const signup = async (req, res) => {
     const{username,email,password}=req.body;
     console.log(req.body);
     const user= await UserModel.find({email});
-    if(user)
+    if(user.length>0)
     {
       return res.status(409).json({message:"user already exists"});
     }
@@ -25,7 +25,6 @@ const signup = async (req, res) => {
       email,
       password: hashpassword
     })
-    console.log(response);
     if(!response)
     {
       res.status(500).json(error.message)
