@@ -1,3 +1,4 @@
+const ProductModel = require("../models/ProductModel");
 const PropertyModel = require("../models/PropertyModel");
 const PurchaseModel = require("../models/PurchaseModel");
 
@@ -10,6 +11,45 @@ const createListing = async (req, res) => {
     })
     res.status(201).json({ user });
 }
+
+const productListing=async (req, res)=>{
+    const {prodname,description,price,stock,category,imageurls,userid}=req.body;
+
+    const product= await ProductModel.create({
+        prodname,description,price,stock,category,imageurls,userid
+    });
+     res.status(201).json({message:"Product created"});
+}
+
+const getuserproductlisting=async (req,res)=>{
+    const{id}=req.params;
+    const listing = await ProductModel.findById(id);
+
+    listing ? res.status(200).json(listing) : res.status(404).json("no listing found");
+}
+
+const getproductlisting=async(req, res)=>
+    {
+        try {
+            const data = await ProductModel.find({})
+            res.status(200).json(data)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json("error occured")
+        }
+    }
+    const getbycategory=async(req,res)=>{
+        try {
+            const {category}=req.params;
+            const listing= await ProductModel.find({category})
+            res.status(200).json(listing);
+            
+        } catch (error) {
+            console.log(error)
+            res.status(500).json("server error");
+        }
+    }    
+
 
 const getListing = async (req, res) => {
     try {
@@ -32,6 +72,40 @@ const userListing = async (req, res) => {
         res.status(500).json("error occured")
     }
 }
+const userproductListing = async (req, res) => {
+    try {
+
+        const data = await ProductModel.find({ userid: req.params.id });
+        data != 0 ? res.status(200).json(data) : res.status(404).json("no listing found");
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("error occured")
+    }
+}
+
+
+const deleteproduct= async(req,res)=>
+    {
+        try {
+           const {userid}=req.body;
+           const product= await ProductModel.findById(req.params.id)
+        if (!product) {
+            res.status(404).json("no product found")
+        }
+
+        if (userid != product.userid) {
+            res.status(403).json("You can only delete the listing created by you")
+        }
+        await ProductModel.findByIdAndDelete(req.params.id);
+        res.status(200).json("product deleted successfully");
+ 
+        } catch (error) {
+            console.log(error)
+        res.status(500).json("error occured")
+        }
+    }
 
 const deleteListing = async (req, res) => {
     try {
@@ -66,6 +140,29 @@ const updateListing = async (req, res) => {
             res.status(403).json("You can only delete the listing created by you")
         }
         const updatedData = await PropertyModel.findByIdAndUpdate(id, req.body, { new: true })
+        res.status(200).json(updatedData);
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json("error occured")
+    }
+}
+
+
+const updateProduct=async(req,res)=>{
+    try {
+        const { userid } = req.headers;
+        const id = req.params.id
+        const property = await ProductModel.findById(req.params.id)
+        if (!property) {
+            res.status(404).json("no property found")
+        }
+
+        if (userid != property.userid) {
+            res.status(403).json("You can only update the listing created by you")
+        }
+        const updatedData = await ProductModel.findByIdAndUpdate(id, req.body, { new: true })
         res.status(200).json(updatedData);
 
 
@@ -122,5 +219,12 @@ module.exports = {
     updateListing,
     getUserListing,
     searchListing,
-    purchasedListing
+    purchasedListing,
+    productListing,
+    getproductlisting,
+    getuserproductlisting,
+    getbycategory,
+    userproductListing,
+    updateProduct,
+    deleteproduct
 }

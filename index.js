@@ -1,6 +1,6 @@
 const path =require("path")
 const mongoose = require("mongoose");
-require("dotenv").config({path:"../.env"})
+require("dotenv").config({path:"./.env"})
 const userRouter=require("./router/userRouter.js");
 const authRouter=require("./router/authRouter.js");
 const listingRouter=require("./router/listingRouter.js");
